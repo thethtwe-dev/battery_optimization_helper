@@ -58,3 +58,4 @@ void openbackgroundSettings() async {
   await BatteryOptimizationHelper.openAutoStartSettings();
 }
 ```# battery_optimization_helper
+# battery_optimization_helper
