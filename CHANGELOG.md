@@ -1,8 +1,3 @@
-## 0.0.2
-
-- Initial release.
-- Added support for checking and requesting disable of Android battery optimization.
-
 ## 0.0.1
 
 - Initial release.
@@ -35,6 +30,18 @@
  - Bump Kotlin Gradle Plugin to 2.1.0 in example and 2.1.0 in plugin build to resolve upcoming support warnings.
 
 ## 0.1.1
+
+- Improve README: installing via CLI, rationale example snippet, versions/tooling, and pub score tips.
+- Enhance example app with rationale dialog and clearer actions.
+- Update tests to reflect new API and stabilize Android unit test.
+
+## 0.1.2
+
+- Improve README: installing via CLI, rationale example snippet, versions/tooling, and pub score tips.
+- Enhance example app with rationale dialog and clearer actions.
+- Update tests to reflect new API and stabilize Android unit test.
+
+## 0.1.3
 
 - Improve README: installing via CLI, rationale example snippet, versions/tooling, and pub score tips.
 - Enhance example app with rationale dialog and clearer actions.

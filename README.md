@@ -16,7 +16,7 @@ Add to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  battery_optimization_helper: ^0.1.2
+  battery_optimization_helper: ^0.1.3
 ```
 
 Or use the CLI:
@@ -146,7 +146,7 @@ See `CHANGELOG.md` for release notes.
 
 ## 📦 Versions
 
-- Plugin: `>=0.1.2`
+- Plugin: `>=0.1.3`
 - Flutter: `>=3.13.0` recommended
 - Android Gradle Plugin: `>=8.1.0` recommended
 - Kotlin Gradle Plugin: `>=2.1.0` recommended
