@@ -16,7 +16,7 @@ Add to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  battery_optimization_helper: ^0.1.1
+  battery_optimization_helper: ^0.1.2
 ```
 
 Or use the CLI:
@@ -146,12 +146,7 @@ See `CHANGELOG.md` for release notes.
 
 ## 📦 Versions
 
-- Plugin: `>=0.1.1`
+- Plugin: `>=0.1.2`
 - Flutter: `>=3.13.0` recommended
 - Android Gradle Plugin: `>=8.1.0` recommended
 - Kotlin Gradle Plugin: `>=2.1.0` recommended
-
-## 🏆 Pub score tips
-
-- Run `dart format .` before publishing (Pana checks formatter compliance).
-- Ensure the `issue_tracker` URL in `pubspec.yaml` is publicly reachable.

@@ -1,8 +1,12 @@
-## 0.0.1
+## 0.0.2
 
 - Initial release.
 - Added support for checking and requesting disable of Android battery optimization.
 
+## 0.0.1
+
+- Initial release.
+- Added support for checking and requesting disable of Android battery optimization.
 
 ## 0.0.2
 
