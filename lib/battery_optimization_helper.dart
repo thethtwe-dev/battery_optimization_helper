@@ -76,7 +76,6 @@ class BatteryOptimizationHelper {
       // Re-check after returning from the dialog or fallback
       final nowOptimized = await isBatteryOptimizationEnabled();
       if (!nowOptimized) return true;
-
     } on PlatformException {
       if (openSettingsIfDirectRequestNotPossible) {
         try {

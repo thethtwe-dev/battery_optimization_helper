@@ -38,7 +38,9 @@ class MethodChannelBatteryOptimizationHelper
 
   @override
   Future<bool> openAutoStartSettings() async {
-    final opened = await methodChannel.invokeMethod<bool>('openAutoStartSettings');
+    final opened = await methodChannel.invokeMethod<bool>(
+      'openAutoStartSettings',
+    );
     return opened ?? false;
   }
 }

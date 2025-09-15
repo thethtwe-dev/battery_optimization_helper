@@ -1,6 +1,6 @@
 name: battery_optimization_helper
 description: A Flutter plugin to detect and request disabling Android battery optimization, with best‑effort OEM auto‑start shortcuts.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/thethtwe-dev/battery_optimization_helper
 repository: https://github.com/thethtwe-dev/battery_optimization_helper
 issue_tracker: https://github.com/thethtwe-dev/battery_optimization_helper/issues

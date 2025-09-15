@@ -29,3 +29,9 @@
  - Refactor Dart API to use platform interface; add `ensureOptimizationDisabled()` convenience method and safer wrappers that handle exceptions.
  - Add `requestDisableBatteryOptimizationWithResult` to report status after user returns from the system dialog.
  - Bump Kotlin Gradle Plugin to 2.1.0 in example and 2.1.0 in plugin build to resolve upcoming support warnings.
+
+## 0.1.1
+
+- Improve README: installing via CLI, rationale example snippet, versions/tooling, and pub score tips.
+- Enhance example app with rationale dialog and clearer actions.
+- Update tests to reflect new API and stabilize Android unit test.

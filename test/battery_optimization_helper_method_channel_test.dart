@@ -11,20 +11,20 @@ void main() {
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall call) async {
-      switch (call.method) {
-        case 'isBatteryOptimizationEnabled':
-          return false;
-        case 'requestDisableBatteryOptimizationWithResult':
-          return true;
-        case 'openAutoStartSettings':
-          return true;
-        case 'requestDisableBatteryOptimization':
-        case 'openBatteryOptimizationSettings':
-          return null;
-        default:
-          throw PlatformException(code: 'not_implemented');
-      }
-    });
+          switch (call.method) {
+            case 'isBatteryOptimizationEnabled':
+              return false;
+            case 'requestDisableBatteryOptimizationWithResult':
+              return true;
+            case 'openAutoStartSettings':
+              return true;
+            case 'requestDisableBatteryOptimization':
+            case 'openBatteryOptimizationSettings':
+              return null;
+            default:
+              throw PlatformException(code: 'not_implemented');
+          }
+        });
   });
 
   tearDown(() {
