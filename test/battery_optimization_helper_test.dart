@@ -7,12 +7,23 @@ class MockBatteryOptimizationHelperPlatform
     with MockPlatformInterfaceMixin
     implements BatteryOptimizationHelperPlatform {
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<bool> isBatteryOptimizationEnabled() async => false;
+
+  @override
+  Future<void> openBatteryOptimizationSettings() async {}
+
+  @override
+  Future<bool> openAutoStartSettings() async => true;
+
+  @override
+  Future<void> requestDisableBatteryOptimization() async {}
+
+  @override
+  Future<bool> requestDisableBatteryOptimizationWithResult() async => true;
 }
 
 void main() {
-  final BatteryOptimizationHelperPlatform initialPlatform =
-      BatteryOptimizationHelperPlatform.instance;
+  final initialPlatform = BatteryOptimizationHelperPlatform.instance;
 
   test('$MethodChannelBatteryOptimizationHelper is the default instance', () {
     expect(

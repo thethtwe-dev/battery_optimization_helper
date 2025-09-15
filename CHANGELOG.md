@@ -19,3 +19,13 @@
 ## 0.0.5
 
 - Update readme file.
+
+## 0.1.0
+
+- Add Android version guards to avoid crashes on API < 23.
+- Improve activity launching with safe fallbacks.
+- Expand OEM auto-start/background settings coverage (Samsung, Huawei, OnePlus, Realme, Asus, Meizu, Nokia, Motorola, etc.).
+- Update README with clear usage, 16 KB page size guidance, and tips.
+ - Refactor Dart API to use platform interface; add `ensureOptimizationDisabled()` convenience method and safer wrappers that handle exceptions.
+ - Add `requestDisableBatteryOptimizationWithResult` to report status after user returns from the system dialog.
+ - Bump Kotlin Gradle Plugin to 2.1.0 in example and 2.1.0 in plugin build to resolve upcoming support warnings.

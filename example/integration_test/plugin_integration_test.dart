@@ -12,7 +12,7 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    //
+  testWidgets('smoke test', (tester) async {
+    expect(true, isTrue);
   });
 }

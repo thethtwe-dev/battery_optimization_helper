@@ -5,15 +5,26 @@ import 'package:battery_optimization_helper/battery_optimization_helper_method_c
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelBatteryOptimizationHelper platform =
-      MethodChannelBatteryOptimizationHelper();
-  const MethodChannel channel = MethodChannel('battery_optimization_helper');
+  final platform = MethodChannelBatteryOptimizationHelper();
+  const channel = MethodChannel('battery_optimization_helper');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-          return '42';
-        });
+        .setMockMethodCallHandler(channel, (MethodCall call) async {
+      switch (call.method) {
+        case 'isBatteryOptimizationEnabled':
+          return false;
+        case 'requestDisableBatteryOptimizationWithResult':
+          return true;
+        case 'openAutoStartSettings':
+          return true;
+        case 'requestDisableBatteryOptimization':
+        case 'openBatteryOptimizationSettings':
+          return null;
+        default:
+          throw PlatformException(code: 'not_implemented');
+      }
+    });
   });
 
   tearDown(() {
@@ -21,7 +32,15 @@ void main() {
         .setMockMethodCallHandler(channel, null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('isBatteryOptimizationEnabled returns false', () async {
+    expect(await platform.isBatteryOptimizationEnabled(), false);
+  });
+
+  test('openAutoStartSettings returns true', () async {
+    expect(await platform.openAutoStartSettings(), true);
+  });
+
+  test('requestDisableBatteryOptimizationWithResult returns true', () async {
+    expect(await platform.requestDisableBatteryOptimizationWithResult(), true);
   });
 }

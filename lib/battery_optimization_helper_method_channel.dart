@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'battery_optimization_helper_platform_interface.dart';
 
-/// An implementation of [BatteryOptimizationHelperPlatform] that uses method channels.
+/// MethodChannel implementation of [BatteryOptimizationHelperPlatform].
 class MethodChannelBatteryOptimizationHelper
     extends BatteryOptimizationHelperPlatform {
   /// The method channel used to interact with the native platform.
@@ -11,10 +11,34 @@ class MethodChannelBatteryOptimizationHelper
   final methodChannel = const MethodChannel('battery_optimization_helper');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>(
-      'getPlatformVersion',
+  Future<bool> isBatteryOptimizationEnabled() async {
+    final isEnabled = await methodChannel.invokeMethod<bool>(
+      'isBatteryOptimizationEnabled',
     );
-    return version;
+    return isEnabled ?? false;
+  }
+
+  @override
+  Future<void> requestDisableBatteryOptimization() async {
+    await methodChannel.invokeMethod<void>('requestDisableBatteryOptimization');
+  }
+
+  @override
+  Future<bool> requestDisableBatteryOptimizationWithResult() async {
+    final disabled = await methodChannel.invokeMethod<bool>(
+      'requestDisableBatteryOptimizationWithResult',
+    );
+    return disabled ?? false;
+  }
+
+  @override
+  Future<void> openBatteryOptimizationSettings() async {
+    await methodChannel.invokeMethod<void>('openBatteryOptimizationSettings');
+  }
+
+  @override
+  Future<bool> openAutoStartSettings() async {
+    final opened = await methodChannel.invokeMethod<bool>('openAutoStartSettings');
+    return opened ?? false;
   }
 }
