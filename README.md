@@ -8,7 +8,8 @@ Lightweight Flutter plugin to detect and request disabling Android battery optim
 - ⚙️ Prompt user to allow “Ignore battery optimizations”
 - ⚙️ Open system battery optimization settings
 - 🚀 Try opening OEM auto‑start/background settings (best‑effort)
-- 🔁 Result-based request: report status after user returns from the dialog
+- 🔁 Typed outcome flow for disable requests
+- 🩺 Diagnostics snapshot API for battery restrictions and device context
 
 ## 📦 Installing
 
@@ -16,7 +17,7 @@ Add to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  battery_optimization_helper: ^0.1.3
+  battery_optimization_helper: ^0.2.0
 ```
 
 Or use the CLI:
@@ -39,12 +40,18 @@ The plugin declares `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`. If you prefer to dec
 import 'package:battery_optimization_helper/battery_optimization_helper.dart';
 
 Future<void> example() async {
-  final isEnabled = await BatteryOptimizationHelper.isBatteryOptimizationEnabled();
-  if (isEnabled) {
-    // Prefer the result-based flow
-    final disabled = await BatteryOptimizationHelper
-        .ensureOptimizationDisabled(openSettingsIfDirectRequestNotPossible: true);
+  final outcome = await BatteryOptimizationHelper
+      .ensureOptimizationDisabledDetailed(
+    openSettingsIfDirectRequestNotPossible: true,
+  );
+
+  if (outcome.status == OptimizationOutcomeStatus.settingsOpened) {
+    // User was routed to settings. Re-check on resume if needed.
   }
+
+  final snapshot = await BatteryOptimizationHelper.getBatteryRestrictionSnapshot();
+  debugPrint('Manufacturer: ${snapshot.manufacturer}');
+  debugPrint('Power saver: ${snapshot.isPowerSaveModeOn}');
 
   // Open the system screen for battery optimizations
   await BatteryOptimizationHelper.openBatteryOptimizationSettings();
@@ -57,15 +64,40 @@ Future<void> example() async {
 }
 ```
 
-Or, use the convenience helper to ensure optimization is disabled:
+Typed outcome helper:
 
 ```dart
-final ok = await BatteryOptimizationHelper.ensureOptimizationDisabled(
+final outcome = await BatteryOptimizationHelper.ensureOptimizationDisabledDetailed(
   openSettingsIfDirectRequestNotPossible: true,
 );
+
+switch (outcome.status) {
+  case OptimizationOutcomeStatus.alreadyDisabled:
+  case OptimizationOutcomeStatus.disabledAfterPrompt:
+    // Ready for background work
+    break;
+  case OptimizationOutcomeStatus.settingsOpened:
+    // Ask user to return after adjusting settings
+    break;
+  case OptimizationOutcomeStatus.unsupported:
+    // Not applicable on this platform/device
+    break;
+  case OptimizationOutcomeStatus.failed:
+    // Graceful fallback
+    break;
+}
 ```
 
-If you need finer control, you can call the result-based method directly:
+Diagnostics snapshot:
+
+```dart
+final snapshot = await BatteryOptimizationHelper.getBatteryRestrictionSnapshot();
+// snapshot.androidSdkInt, snapshot.manufacturer,
+// snapshot.isBatteryOptimizationEnabled, snapshot.isPowerSaveModeOn,
+// snapshot.canOpenAutoStartSettings
+```
+
+If you need lower-level control, you can still call platform methods directly:
 
 ```dart
 final disabled = await BatteryOptimizationHelperPlatform.instance
@@ -73,6 +105,38 @@ final disabled = await BatteryOptimizationHelperPlatform.instance
 ```
 
 The example app includes a small “rationale” dialog flow you can adapt.
+
+## 🔄 Migration to 0.2.0
+
+`0.2.0` adds typed outcomes and diagnostics while keeping the old helper available.
+
+- Existing API still works: `ensureOptimizationDisabled()` returns `bool`.
+- Recommended API: `ensureOptimizationDisabledDetailed()` returns `OptimizationOutcome`.
+- New diagnostics API: `getBatteryRestrictionSnapshot()`.
+
+Before:
+
+```dart
+final ok = await BatteryOptimizationHelper.ensureOptimizationDisabled(
+  openSettingsIfDirectRequestNotPossible: true,
+);
+if (ok) {
+  // proceed
+}
+```
+
+After (recommended):
+
+```dart
+final outcome = await BatteryOptimizationHelper.ensureOptimizationDisabledDetailed(
+  openSettingsIfDirectRequestNotPossible: true,
+);
+
+if (outcome.status == OptimizationOutcomeStatus.disabledAfterPrompt ||
+    outcome.status == OptimizationOutcomeStatus.alreadyDisabled) {
+  // proceed
+}
+```
 
 ## 📚 Notes on Android versions
 
@@ -83,14 +147,14 @@ The example app includes a small “rationale” dialog flow you can adapt.
 
 - Kotlin Gradle Plugin: 2.1.0+ recommended (the example uses 2.1.0).
 - Android Gradle Plugin: 8.1+ recommended.
-- Flutter: 3.13+ recommended.
+- Flutter: 3.32+ recommended.
 
 ## 📐 Android 16 KB page size support
 
 Some newer Android devices use a 16 KB memory page size. Modern Flutter/AGP/NDK toolchains handle this automatically. Ensure your app uses:
 
-- Flutter 3.13+ and Android Gradle Plugin 8.1+ (or newer)
-- A recent NDK (example app uses `ndkVersion = 27.0.12077973`)
+- Flutter 3.32+ and Android Gradle Plugin 8.1+ (or newer)
+- A recent NDK (example app uses `ndkVersion = 28.2.13676358`)
 
 If you must support older build toolchains, a pragmatic workaround is to force extraction of native libraries to avoid direct APK mapping:
 
@@ -131,10 +195,10 @@ final proceed = await showDialog<bool>(
   ),
 );
 if (proceed == true) {
-  final ok = await BatteryOptimizationHelper.ensureOptimizationDisabled(
+  final outcome = await BatteryOptimizationHelper.ensureOptimizationDisabledDetailed(
     openSettingsIfDirectRequestNotPossible: true,
   );
-  // handle ok
+  // handle outcome.status
 }
 ```
 
@@ -146,7 +210,7 @@ See `CHANGELOG.md` for release notes.
 
 ## 📦 Versions
 
-- Plugin: `>=0.1.3`
-- Flutter: `>=3.13.0` recommended
+- Plugin: `>=0.2.0`
+- Flutter: `>=3.32.0` recommended
 - Android Gradle Plugin: `>=8.1.0` recommended
 - Kotlin Gradle Plugin: `>=2.1.0` recommended

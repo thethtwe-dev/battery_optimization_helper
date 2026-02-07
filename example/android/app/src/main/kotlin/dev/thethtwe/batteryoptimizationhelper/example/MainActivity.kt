@@ -1,4 +1,4 @@
-package com.example.battery_optimization_helper_example
+package dev.thethtwe.batteryoptimizationhelper.example
 
 import io.flutter.embedding.android.FlutterActivity
 

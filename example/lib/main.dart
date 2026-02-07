@@ -62,11 +62,14 @@ class _ExampleHomeState extends State<ExampleHome> {
     );
     if (proceed != true) return;
 
-    final ok = await BatteryOptimizationHelper.ensureOptimizationDisabled(
-      openSettingsIfDirectRequestNotPossible: true,
-    );
+    final outcome =
+        await BatteryOptimizationHelper.ensureOptimizationDisabledDetailed(
+          openSettingsIfDirectRequestNotPossible: true,
+        );
     setState(() {
-      _log = 'ensureOptimizationDisabled => $ok';
+      _log =
+          'ensureOptimizationDisabledDetailed => ${outcome.status.name} '
+          '(disabled=${outcome.isOptimizationDisabled})';
     });
     await _refreshStatus();
     if (!mounted) return;
@@ -94,14 +97,35 @@ class _ExampleHomeState extends State<ExampleHome> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final ensured =
-                        await BatteryOptimizationHelper.ensureOptimizationDisabled(
+                    final outcome =
+                        await BatteryOptimizationHelper.ensureOptimizationDisabledDetailed(
                           openSettingsIfDirectRequestNotPossible: true,
                         );
-                    setState(() => _log = 'Ensured disabled: $ensured');
+                    setState(
+                      () =>
+                          _log =
+                              'Detailed outcome: ${outcome.status.name} '
+                              '(disabled=${outcome.isOptimizationDisabled})',
+                    );
                     await _refreshStatus();
                   },
                   child: const Text('Ensure Disabled'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final snapshot =
+                        await BatteryOptimizationHelper.getBatteryRestrictionSnapshot();
+                    setState(
+                      () =>
+                          _log =
+                              'Snapshot: sdk=${snapshot.androidSdkInt}, '
+                              'manufacturer=${snapshot.manufacturer}, '
+                              'optimized=${snapshot.isBatteryOptimizationEnabled}, '
+                              'powerSave=${snapshot.isPowerSaveModeOn}, '
+                              'canOpenOEM=${snapshot.canOpenAutoStartSettings}',
+                    );
+                  },
+                  child: const Text('Refresh Diagnostics'),
                 ),
                 ElevatedButton(
                   onPressed: () async {

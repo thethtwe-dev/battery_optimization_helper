@@ -1,3 +1,20 @@
+## 0.2.0
+
+- Add typed optimization outcomes via `ensureOptimizationDisabledDetailed()` with explicit statuses (`alreadyDisabled`, `disabledAfterPrompt`, `settingsOpened`, `unsupported`, `failed`).
+- Add diagnostics API: `getBatteryRestrictionSnapshot()` (SDK, manufacturer, optimization state, power saver state, and OEM settings capability).
+- Update Android implementation to provide diagnostics and OEM capability checks.
+- Expand tests and update example app to demonstrate the new APIs.
+- Bump example Android NDK to `28.2.13676358` to match current `integration_test` requirements.
+- Replace `com.example.*` Android package/application identifiers with project-specific namespaces.
+- Align SDK constraints with current dependencies (`Dart >=3.8`, `Flutter >=3.32`).
+- Add GitHub Actions CI workflow to enforce analyze/test/build and `publish --dry-run`.
+
+## 0.1.4
+
+- Upgrade lint/tooling constraints to current compatible versions (`flutter_lints` 6.x).
+- Refresh example dependency lockfile and align it with the package version.
+- Update example widget test to match current sample UI.
+
 ## 0.0.1
 
 - Initial release.

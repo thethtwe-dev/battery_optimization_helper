@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter Version
+        run: flutter --version
+
+      - name: Package Deps
+        run: flutter pub get
+
+      - name: Analyze Package
+        run: flutter analyze
+
+      - name: Test Package
+        run: flutter test
+
+      - name: Publish Dry Run
+        run: flutter pub publish --dry-run
+
+      - name: Example Deps
+        working-directory: example
+        run: flutter pub get
+
+      - name: Analyze Example
+        working-directory: example
+        run: flutter analyze
+
+      - name: Test Example
+        working-directory: example
+        run: flutter test
+
+      - name: Build Example APK
+        working-directory: example
+        run: flutter build apk --debug

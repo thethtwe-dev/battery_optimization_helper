@@ -18,6 +18,15 @@ void main() {
               return true;
             case 'openAutoStartSettings':
               return true;
+            case 'getBatteryRestrictionSnapshot':
+              return <String, dynamic>{
+                'isSupported': true,
+                'androidSdkInt': 34,
+                'manufacturer': 'google',
+                'isBatteryOptimizationEnabled': false,
+                'isPowerSaveModeOn': false,
+                'canOpenAutoStartSettings': true,
+              };
             case 'requestDisableBatteryOptimization':
             case 'openBatteryOptimizationSettings':
               return null;
@@ -42,5 +51,12 @@ void main() {
 
   test('requestDisableBatteryOptimizationWithResult returns true', () async {
     expect(await platform.requestDisableBatteryOptimizationWithResult(), true);
+  });
+
+  test('getBatteryRestrictionSnapshot returns map', () async {
+    final snapshot = await platform.getBatteryRestrictionSnapshot();
+    expect(snapshot['isSupported'], true);
+    expect(snapshot['androidSdkInt'], 34);
+    expect(snapshot['manufacturer'], 'google');
   });
 }

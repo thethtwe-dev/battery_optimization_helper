@@ -1,4 +1,4 @@
-group = "com.example.battery_optimization_helper"
+group = "dev.thethtwe.batteryoptimizationhelper"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "com.example.battery_optimization_helper"
+    namespace = "dev.thethtwe.batteryoptimizationhelper"
 
     compileSdk = 35
 

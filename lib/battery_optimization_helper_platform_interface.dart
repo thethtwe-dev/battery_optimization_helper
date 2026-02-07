@@ -49,4 +49,10 @@ abstract class BatteryOptimizationHelperPlatform extends PlatformInterface {
       'openAutoStartSettings() has not been implemented.',
     );
   }
+
+  Future<Map<String, dynamic>> getBatteryRestrictionSnapshot() {
+    throw UnimplementedError(
+      'getBatteryRestrictionSnapshot() has not been implemented.',
+    );
+  }
 }

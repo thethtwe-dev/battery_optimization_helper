@@ -43,4 +43,12 @@ class MethodChannelBatteryOptimizationHelper
     );
     return opened ?? false;
   }
+
+  @override
+  Future<Map<String, dynamic>> getBatteryRestrictionSnapshot() async {
+    final snapshot = await methodChannel.invokeMapMethod<String, dynamic>(
+      'getBatteryRestrictionSnapshot',
+    );
+    return snapshot ?? <String, dynamic>{};
+  }
 }

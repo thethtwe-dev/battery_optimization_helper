@@ -1,4 +1,4 @@
-package com.example.battery_optimization_helper
+package dev.thethtwe.batteryoptimizationhelper
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
