@@ -178,8 +178,8 @@ class BatteryOptimizationHelper {
     try {
       // Prefer result-based flow if available.
       try {
-        final disabled =
-            await _platform.requestDisableBatteryOptimizationWithResult();
+        final disabled = await _platform
+            .requestDisableBatteryOptimizationWithResult();
         if (disabled) {
           return const OptimizationOutcome(
             status: OptimizationOutcomeStatus.disabledAfterPrompt,

@@ -40,25 +40,24 @@ class _ExampleHomeState extends State<ExampleHome> {
   Future<void> _showRationaleThenEnsure() async {
     final proceed = await showDialog<bool>(
       context: context,
-      builder:
-          (ctx) => AlertDialog(
-            title: const Text('Background Execution'),
-            content: const Text(
-              'To run reliably in the background, the app requests an exception '
-              'from battery optimizations. You can change this at any time in '
-              'system settings.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Not now'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text('Continue'),
-              ),
-            ],
+      builder: (ctx) => AlertDialog(
+        title: const Text('Background Execution'),
+        content: const Text(
+          'To run reliably in the background, the app requests an exception '
+          'from battery optimizations. You can change this at any time in '
+          'system settings.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Not now'),
           ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Continue'),
+          ),
+        ],
+      ),
     );
     if (proceed != true) return;
 
@@ -102,10 +101,9 @@ class _ExampleHomeState extends State<ExampleHome> {
                           openSettingsIfDirectRequestNotPossible: true,
                         );
                     setState(
-                      () =>
-                          _log =
-                              'Detailed outcome: ${outcome.status.name} '
-                              '(disabled=${outcome.isOptimizationDisabled})',
+                      () => _log =
+                          'Detailed outcome: ${outcome.status.name} '
+                          '(disabled=${outcome.isOptimizationDisabled})',
                     );
                     await _refreshStatus();
                   },
@@ -116,13 +114,12 @@ class _ExampleHomeState extends State<ExampleHome> {
                     final snapshot =
                         await BatteryOptimizationHelper.getBatteryRestrictionSnapshot();
                     setState(
-                      () =>
-                          _log =
-                              'Snapshot: sdk=${snapshot.androidSdkInt}, '
-                              'manufacturer=${snapshot.manufacturer}, '
-                              'optimized=${snapshot.isBatteryOptimizationEnabled}, '
-                              'powerSave=${snapshot.isPowerSaveModeOn}, '
-                              'canOpenOEM=${snapshot.canOpenAutoStartSettings}',
+                      () => _log =
+                          'Snapshot: sdk=${snapshot.androidSdkInt}, '
+                          'manufacturer=${snapshot.manufacturer}, '
+                          'optimized=${snapshot.isBatteryOptimizationEnabled}, '
+                          'powerSave=${snapshot.isPowerSaveModeOn}, '
+                          'canOpenOEM=${snapshot.canOpenAutoStartSettings}',
                     );
                   },
                   child: const Text('Refresh Diagnostics'),
